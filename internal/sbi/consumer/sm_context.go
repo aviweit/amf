@@ -176,9 +176,16 @@ func buildCreateSmContextRequest(ue *amf_context.AmfUe, smContext *amf_context.S
 		smContextCreateData.RatType = ue.RatType
 	}
 	// TODO: location is used in roaming scenerio
-	// if ue.Location != nil {
-	// 	smContextCreateData.UeLocation = ue.Location
-	// }
+	if &ue.Location != nil {
+		ue.GmmLog.Debugf("buildCreateSmContextRequest: set UeLocation: [%+v]", ue.Location)
+		ue.GmmLog.Debugf("buildCreateSmContextRequest UeLocation.NrLocation %+v", ue.Location.NrLocation)
+		ue.GmmLog.Debugf("buildCreateSmContextRequest UeLocation.NrLocation.Tai %+v", ue.Location.NrLocation.Tai)
+		ue.GmmLog.Debugf("buildCreateSmContextRequest UeLocation.NrLocation.Ncgi %+v", ue.Location.NrLocation.Ncgi)
+		ue.GmmLog.Debugf("buildCreateSmContextRequest UeLocation.NrLocation.GlobalGnbId %+v", ue.Location.NrLocation.GlobalGnbId)
+
+		smContextCreateData.UeLocation = &ue.Location
+	}
+
 	smContextCreateData.UeTimeZone = ue.TimeZone
 	smContextCreateData.SmContextStatusUri = context.GetIPv4Uri() + "/namf-callback/v1/smContextStatus/" +
 		ue.Guti + "/" + strconv.Itoa(int(smContext.PduSessionID()))

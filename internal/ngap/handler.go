@@ -81,6 +81,9 @@ func HandleNGSetupRequest(ran *context.AmfRan, message *ngapType.NGAPPDU) {
 	}
 
 	ran.SetRanId(globalRANNodeID)
+	ran.Log.Debugf("ran.RanId [%+v]", ran.RanId)
+	ran.Log.Debugf("ran.RanId.GNbId [%+v]", ran.RanId.GNbId)
+
 	if rANNodeName != nil {
 		ran.Name = rANNodeName.Value
 	}
